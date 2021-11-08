@@ -17,3 +17,17 @@ docker-compose --file ./docker-compose.yml down --rmi all --volumes
 # ログイン
 
 mysql -h 127.0.0.1 -u mysqladmin -ppassword
+
+# サーバー起動コマンド
+
+npm start
+
+# npm のキャッシュ削除
+
+npm cache clean --force
+rm -rf node_modules
+rm -rf ~/.npm
+
+# ライブラリ入れ直す
+
+npm i
