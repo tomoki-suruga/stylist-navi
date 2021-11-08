@@ -1,2 +1,7 @@
 .idea/*
 node_modules/*
+src/docker/log/
+src/docker/log/*
+src/docker/log/mysql/
+src/docker/log/mysql/*
+src/docker/log/
