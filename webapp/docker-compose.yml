@@ -1,0 +1,10 @@
+version: "3"
+services:
+  webserver:
+    build: "./node"
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./node/app:/app
+    image: stylist_navi_webapp
