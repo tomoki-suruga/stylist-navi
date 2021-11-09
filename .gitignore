@@ -1,2 +1,7 @@
+.DS_Store
 .idea/*
-node_modules/*
+webapp/node/app/node_modules/*
+db/log/
+db/log/*
+db/log/mysql/
+db/log/mysql/*
