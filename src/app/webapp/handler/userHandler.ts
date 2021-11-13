@@ -1,14 +1,15 @@
-import express = require("express")
+import { Request, Response } from "express"
 import { Transaction } from "sequelize/types"
+import { Users } from "../type/Users"
 import {
   DB_CONNECTION_ERROR,
   CREATE_USER_SUCCESSED,
   UPDATE_USER_SUCCESSED,
 } from "../const/messages"
 const db = require("../models/")
-const getAllHandler = async (_: any, res: express.Response) => {
+const getAllHandler = async (_: any, res: Response) => {
   await db.User.findAll()
-    .then((users: any) => {
+    .then((users: Users) => {
       res.json(users)
     })
     .catch((e: Error) => {
@@ -18,9 +19,9 @@ const getAllHandler = async (_: any, res: express.Response) => {
     })
 }
 
-const getHandler = async (req: express.Request, res: express.Response) => {
+const getHandler = async (req: Request, res: Response) => {
   await db.User.findByPk(req.params.id)
-    .then((user: any) => {
+    .then((user: Users) => {
       res.json(user)
     })
     .catch((e: Error) => {
@@ -30,7 +31,7 @@ const getHandler = async (req: express.Request, res: express.Response) => {
     })
 }
 
-const createHandler = async (req: express.Request, res: express.Response) => {
+const createHandler = async (req: Request, res: Response) => {
   await db.sequelize.transaction({}, async (transaction: Transaction) => {
     console.log(req.body.user.name)
     console.log(req.body.user.email)
@@ -41,7 +42,7 @@ const createHandler = async (req: express.Request, res: express.Response) => {
       },
       { transaction }
     )
-      .then((result: any) => {
+      .then((result: Users) => {
         console.log(CREATE_USER_SUCCESSED)
         res.status(200).send(result)
       })
@@ -53,7 +54,7 @@ const createHandler = async (req: express.Request, res: express.Response) => {
   })
 }
 
-const updateHandler = async (req: express.Request, res: express.Response) => {
+const updateHandler = async (req: Request, res: Response) => {
   db.sequelize.transaction({}, async (transaction: Transaction) => {
     await db.User.update(
       {
@@ -67,7 +68,7 @@ const updateHandler = async (req: express.Request, res: express.Response) => {
         },
       }
     )
-      .then((result: any) => {
+      .then((result: number) => {
         console.log(UPDATE_USER_SUCCESSED)
         res.status(200).send(result)
       })
