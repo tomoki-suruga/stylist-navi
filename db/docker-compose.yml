@@ -13,10 +13,3 @@ services:
       MYSQL_USER: "mysqladmin"
       MYSQL_PASSWORD: "password"
       TZ: "Asia/Tokyo"
-  webserver:
-    build: "./node"
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./node/app:/app
-    image: stylist_navi_webapp
