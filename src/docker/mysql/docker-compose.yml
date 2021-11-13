@@ -1,13 +1,13 @@
 version: "3"
 services:
   mysql:
-    build: "./mysql/"
+    build: "./"
     ports:
       - "3306:3306"
     volumes:
-      - "./mysql/initdb:/docker-entrypoint-initdb.d"
+      - "./initdb:/docker-entrypoint-initdb.d"
       - "./log/mysql:/var/log/mysql"
-    image: stylist_navi_db
+    image: stylistnavi_db
     environment:
       MYSQL_ROOT_PASSWORD: "password"
       MYSQL_USER: "mysqladmin"

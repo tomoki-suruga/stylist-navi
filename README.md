@@ -2,9 +2,61 @@
 
 ranking site for stylist
 
-##### [DB](./db/README.md)
+#### DB
 
-##### [WEB APP](./webapp/README.md)
+##### docker(DB)の起動
+
+```
+docker-compose up --build -d
+# ログイン確認
+mysql -h 127.0.0.1 -umysqladmin -ppassword stylistnavi_local
+```
+
+##### docker(DB)の停止
+
+```
+docker-compose down
+```
+
+##### docker(DB)の削除
+
+```
+docker-compose down --rmi all --volumes
+```
+
+#### WEB APP
+
+##### サーバー起動コマンド(local)
+
+```
+npm start
+```
+
+##### npm のキャッシュ削除
+
+```
+npm cache clean --force
+rm -rf node_modules
+rm -rf ~/.npm
+```
+
+##### ライブラリ入れ直す
+
+```
+npm i
+```
+
+##### サーバー起動コマンド(docker)
+
+```
+docker-compose up -d --build
+```
+
+##### サーバー停止コマンド(docker)
+
+```
+docker-compose down
+```
 
 ##### 初期化
 
