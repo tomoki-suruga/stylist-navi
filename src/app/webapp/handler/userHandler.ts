@@ -1,21 +1,15 @@
 import express = require("express")
+import { Transaction } from "sequelize/types"
 import {
   DB_CONNECTION_ERROR,
-  FAILED_REGISTER,
-  NO_DATA,
   CREATE_USER_SUCCESSED,
   UPDATE_USER_SUCCESSED,
 } from "../const/messages"
 const db = require("../models/")
-
 const getAllHandler = async (_: any, res: express.Response) => {
   await db.User.findAll()
     .then((users: any) => {
-      if (!users) {
-        console.log(NO_DATA)
-      } else {
-        res.json(users)
-      }
+      res.json(users)
     })
     .catch((e: Error) => {
       console.log(e)
@@ -27,11 +21,7 @@ const getAllHandler = async (_: any, res: express.Response) => {
 const getHandler = async (req: express.Request, res: express.Response) => {
   await db.User.findByPk(req.params.id)
     .then((user: any) => {
-      if (!user) {
-        console.log(NO_DATA)
-      } else {
-        res.json(user)
-      }
+      res.json(user)
     })
     .catch((e: Error) => {
       console.log(e)
@@ -41,7 +31,7 @@ const getHandler = async (req: express.Request, res: express.Response) => {
 }
 
 const createHandler = async (req: express.Request, res: express.Response) => {
-  await db.sequelize.transaction({}, async (transaction: any) => {
+  await db.sequelize.transaction({}, async (transaction: Transaction) => {
     console.log(req.body.user.name)
     console.log(req.body.user.email)
     await db.User.create(
@@ -52,12 +42,8 @@ const createHandler = async (req: express.Request, res: express.Response) => {
       { transaction }
     )
       .then((result: any) => {
-        if (!result) {
-          console.log(FAILED_REGISTER)
-        } else {
-          console.log(CREATE_USER_SUCCESSED)
-          res.status(200).send(CREATE_USER_SUCCESSED)
-        }
+        console.log(CREATE_USER_SUCCESSED)
+        res.status(200).send(result)
       })
       .catch((e: Error) => {
         console.log(e)
@@ -68,7 +54,7 @@ const createHandler = async (req: express.Request, res: express.Response) => {
 }
 
 const updateHandler = async (req: express.Request, res: express.Response) => {
-  db.sequelize.transaction({}, async (transaction: any) => {
+  db.sequelize.transaction({}, async (transaction: Transaction) => {
     await db.User.update(
       {
         name: req.body.user.name,
@@ -81,13 +67,9 @@ const updateHandler = async (req: express.Request, res: express.Response) => {
         },
       }
     )
-      .then((result: number) => {
-        if (!result) {
-          console.log(FAILED_REGISTER)
-        } else {
-          console.log(UPDATE_USER_SUCCESSED)
-          res.status(200).send(UPDATE_USER_SUCCESSED)
-        }
+      .then((result: any) => {
+        console.log(UPDATE_USER_SUCCESSED)
+        res.status(200).send(result)
       })
       .catch((e: Error) => {
         console.log(e)
