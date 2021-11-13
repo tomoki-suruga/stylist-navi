@@ -1,16 +1,16 @@
-import express = require("express")
+import express from "express"
+import { userHandler } from "../handler/userHandler"
 
-const handler = require("../handler/userHandler")
-const router = express.Router()
+const userRouter = express.Router()
 
-router.use(express.json())
+userRouter.use(express.json())
 
-router.get("/", handler.getAllHandler)
+userRouter.get("/", userHandler.getAllHandler)
 
-router.get("/:id", handler.getHandler)
+userRouter.get("/:id", userHandler.getHandler)
 
-router.post("/create", handler.createHandler)
+userRouter.post("/create", userHandler.createHandler)
 
-router.post("/update", handler.updateHandler)
+userRouter.post("/update", userHandler.updateHandler)
 
-module.exports = router
+export { userRouter }
